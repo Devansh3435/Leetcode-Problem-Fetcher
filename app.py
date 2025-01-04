@@ -70,6 +70,15 @@ def index():
 def get_problem():
     data = request.json
     question_frontend_id = data.get("questionFrontendId")
+
+    # Fetch all problems if the cache is empty
+    if not problems_cache:
+        try:
+            fetch_all_problems()
+        except Exception as e:
+            return jsonify({"error": f"Failed to update cache: {str(e)}"}), 500
+
+    # Check if the requested problem exists in the cache
     if question_frontend_id not in problems_cache:
         return jsonify({"error": "Invalid questionFrontendId or cache not updated."}), 404
 
@@ -80,6 +89,7 @@ def get_problem():
     # Fetch full problem details based on titleSlug
     problem_details = fetch_problem_details(title_slug)
     return jsonify(problem_details)
+
 
 if __name__ == "__main__":
     # Fetch problems on startup
