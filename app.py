@@ -66,6 +66,14 @@ def fetch_problem_details(title_slug):
 def index():
     return render_template("index.html")
 
+@app.before_first_request
+def init_cache():
+    """Fetch problems before the first request."""
+    try:
+        fetch_all_problems()
+    except Exception as e:
+        print(f"Error initializing problems cache: {e}")
+
 @app.route("/get_problem", methods=["POST"])
 def get_problem():
     data = request.json
