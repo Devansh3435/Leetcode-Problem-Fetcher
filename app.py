@@ -83,4 +83,4 @@ def get_problem():
 if __name__ == "__main__":
     # Fetch problems on startup
     fetch_all_problems()
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
