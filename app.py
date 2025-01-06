@@ -80,7 +80,7 @@ def get_problem():
 
     # Check if the requested problem exists in the cache
     if question_frontend_id not in problems_cache:
-        return jsonify({"error": "Invalid questionFrontendId or cache not updated."}), 404
+        return jsonify({"error": "Invalid question number or cache not updated."}), 404
 
     # Get titleSlug from cached problems
     question_data = problems_cache[question_frontend_id]
